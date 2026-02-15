@@ -1,0 +1,19 @@
+# Runtime configuration overrides.
+# src/config.py is the source of truth for defaults; this file is reserved for
+# experiment-specific overrides consumed by future phases (e.g. multi-class
+# attack-category classification, alternative datasets).
+
+training:
+  label_column: binary_label        # or: attack_category
+  cv_folds: 5
+  scoring: f1
+  fast_mode: true
+
+api:
+  host: 0.0.0.0
+  port: 8000
+  default_model: null               # null -> auto-pick by CV F1
+
+logging:
+  level: INFO
+  predictions_max_bytes: 104857600  # 100 MB

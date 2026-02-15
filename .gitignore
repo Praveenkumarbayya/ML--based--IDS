@@ -1,0 +1,51 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# Secrets — never commit
+.env
+frontend/.env.local
+frontend/.env*.local
+
+# Trained artefacts — regenerable via `make train`
+models/*.joblib
+models/*.npy
+models/plots/
+models/*.json
+models/*.csv
+
+# Raw dataset mirrors — user downloads these locally
+data/raw/*.txt
+data/processed/
+data/ids.db*
+
+# Logs
+logs/*.log
+logs/*.jsonl
+
+# Next.js / Node
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+node_modules/
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Playwright screenshots (generated during live-demo verification)
+.playwright-mcp/
+*.playwright-mcp
+dashboard-*.png
+analyze-page.png
+metrics-page.png
+audit-page.png
+models-page.png

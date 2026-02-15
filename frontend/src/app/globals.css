@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0a0e14;
+  --color-surface: #11161f;
+  --color-surface-2: #161d28;
+  --color-border: #1f2937;
+  --color-border-strong: #273345;
+  --color-foreground: #e6edf3;
+  --color-muted: #8b949e;
+  --color-subtle: #6b7685;
+
+  --color-primary: #22d3ee;
+  --color-primary-foreground: #0a0e14;
+
+  --color-danger: #ef4444;
+  --color-danger-subtle: #2a1212;
+  --color-warning: #f59e0b;
+  --color-warning-subtle: #2a1d06;
+  --color-success: #10b981;
+  --color-success-subtle: #0f1e18;
+
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar — SOC dark aesthetic */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a4557;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.animate-pulse-soft {
+  animation: pulse-soft 1.8s ease-in-out infinite;
+}
+
+@keyframes slide-in {
+  from { transform: translateY(-6px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.animate-slide-in {
+  animation: slide-in 0.25s ease-out;
+}

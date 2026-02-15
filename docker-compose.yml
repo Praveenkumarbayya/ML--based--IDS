@@ -1,0 +1,58 @@
+# Production stack: backend (FastAPI + SQLite) + frontend (Next.js standalone).
+#
+# Bring everything up from a clean clone (after placing the dataset in
+# ./data/raw/) with:
+#
+#   docker compose up --build
+#
+# Train models inside the container (one-shot):
+#
+#   docker compose run --rm backend python main.py train --fast
+#
+# The data/, models/, and logs/ directories are mounted so artefacts survive
+# container recreation.
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    image: ids-backend:latest
+    container_name: ids-backend
+    restart: unless-stopped
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - API_KEY=${API_KEY:?set API_KEY in .env}
+      - CORS_ALLOW_ORIGINS=["http://localhost:3000","http://127.0.0.1:3000"]
+      - DATABASE_URL=sqlite+aiosqlite:///./data/ids.db
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+    ports:
+      - "8000:8000"
+    networks:
+      - ids-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: ids-frontend:latest
+    container_name: ids-frontend
+    restart: unless-stopped
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+      - NEXT_PUBLIC_API_KEY=${API_KEY:?set API_KEY in .env}
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - ids-net
+
+networks:
+  ids-net:
+    driver: bridge
